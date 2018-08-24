@@ -1,0 +1,21 @@
+<!DOCTYPE>
+<html>
+<head>
+  <title>detectExifOrientation</title>
+  <script src="detectExifOrientation.js"></script>
+  <script>
+    window.onload = function (){
+      let input = document.getElementById ("readimg");
+      input.onchange = function (event){
+        let imgFile = event.target.files[0];
+        readImgFile(imgFile).then(function(orientation){
+          console.log (orientation);
+        });
+      }
+    }
+  </script>
+</head>
+<body>
+  <input type="file" id="readimg" accept="image/*"/>
+</body>
+</html>
