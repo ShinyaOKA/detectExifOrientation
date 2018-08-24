@@ -41,3 +41,30 @@ function getExifOrientation(DataURL){
     return 1;
   }
 }
+
+function checkJpeg(fileType){
+  const regex = /image\/jp[e|eg|g]/;
+  if (fileType){
+    return regex.test(fileType);
+  } else {
+    return false;
+  }
+}
+
+function readImgFile (imgFile){
+  return new Promise(function(resolve) {
+    if (imgFile.type.match('image.*') !== null){
+      let reader = new FileReader();
+      reader.readAsDataURL(imgFile);
+      reader.onload = function(event) {
+        if (checkJpeg(imgFile.type)){
+          resolve(getExifOrientation (reader.result));
+        } else {
+          resolve (1); // no orientation
+        }
+      }
+    } else {
+      resolve(1); // no orientation
+    }
+  });
+}
